@@ -8,9 +8,6 @@ import { Vol } from 'src/app/models/vol.model';
 })
 export class ListePassagersComponent {
   @Input() vol!: Vol;
-  affichagePhotos: boolean = false;
-
-  onPhotosToggleClick(): void {
-    
-  }
+  hidePhotos: boolean = true;
+  displayedColumns: string[] = ["image", "nom", "classeVol", "nbBagagesSoute"];
 }

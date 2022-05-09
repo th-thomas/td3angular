@@ -1,10 +1,45 @@
 <!-- Affichage de la liste des passagers -->
 <mat-slide-toggle
-    [(ngModel)]="affichagePhotos"
+    [(ngModel)]="hidePhotos"
     *ngIf="vol.passagers != null && vol.passagers.length > 0">
-    Affichage des photos
+    Masquer les photos
 </mat-slide-toggle>
-<div *ngFor="let passager of vol.passagers">
-    <app-passager [passager]="passager" [photoVisible]="affichagePhotos"></app-passager>
-</div>
 
+<table *ngIf="vol.passagers != null && vol.passagers.length > 0" mat-table class="my-table" [dataSource]="vol.passagers">
+    <ng-container matColumnDef="image">
+        <th mat-header-cell [hidden]="hidePhotos" *matHeaderCellDef> Photo </th>
+        <td mat-cell [hidden]="hidePhotos" *matCellDef="let passager">
+            <img [src]="passager.image">
+        </td>
+      </ng-container>
+
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell [matTooltip]="passager.email" *matCellDef="let passager">
+          {{passager.nom}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="classeVol">
+      <th mat-header-cell *matHeaderCellDef> Classe </th>
+      <td mat-cell *matCellDef="let passager">
+        <span [appClasseVol]="passager.classeVol">
+            {{ passager.classeVol }}
+        </span>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nbBagagesSoute">
+      <th mat-header-cell *matHeaderCellDef> Nb bagages en soute </th>
+      <td mat-cell *matCellDef="let passager" [appClasseBagageWarning]="passager.classeVol" [nbBagages]="passager.nbBagagesSoute">
+        <mat-icon>
+            work
+        </mat-icon>
+        <span>x{{ passager.nbBagagesSoute }}</span>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  

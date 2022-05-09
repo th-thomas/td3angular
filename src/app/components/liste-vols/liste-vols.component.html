@@ -1,4 +1,48 @@
 <!-- Affichage de la liste des vols -->
-<div *ngFor="let vol of vols">
-    <app-vol [vol]="vol" (click)="onVolClick(vol)"></app-vol>
-</div>
+<table *ngIf="vols != null && vols.length > 0" mat-table class="my-table" [dataSource]="vols">
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let vol">
+      <mat-icon *ngIf="type == 'decollages'; else atterrissages">flight_takeoff</mat-icon>
+      <ng-template #atterrissages>
+        <mat-icon>flight_land</mat-icon>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="icao">
+    <th mat-header-cell *matHeaderCellDef> ICAO </th>
+    <td mat-cell *matCellDef="let vol"> {{vol.icao}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="matricule">
+    <th mat-header-cell *matHeaderCellDef> Matricule </th>
+    <td mat-cell *matCellDef="let vol"> {{vol.matricule}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="compagnie">
+    <th mat-header-cell *matHeaderCellDef> Compagnie </th>
+    <td mat-cell *matCellDef="let vol"> {{vol.compagnie}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="departArrivee">
+      <th mat-header-cell *matHeaderCellDef> Départ -> Arrivée </th>
+      <td mat-cell *matCellDef="let vol">
+        <span *ngIf="vol.aeroportDepart != null">{{ vol.aeroportDepart }}</span>
+        <span *ngIf="vol.aeroportDepart == null">Inconnu</span>
+        &rarr;
+        <span *ngIf="vol.aeroportArrivee != null">{{ vol.aeroportArrivee }}</span>
+        <span *ngIf="vol.aeroportArrivee == null">Inconnu</span>
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="logoCompagnie">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let vol">
+        <img src="assets/{{vol.compagnie}}.png" width="100px">
+    </td>
+</ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr (click)="onVolClick(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

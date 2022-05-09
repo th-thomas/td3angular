@@ -22,10 +22,10 @@ import { ListeVolsComponent } from './components/liste-vols/liste-vols.component
 import { PassagerComponent } from './components/passager/passager.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ViewAirFranceComponent } from './components/view-airfrance/view-airfrance.component';
-import { VolComponent } from './components/vol/vol.component';
 import { ClasseVolDirective } from './classe-vol.directive';
 import { ClasseBagageWarningDirective } from './classe-bagage-warning.directive';
 import {MatTooltipModule} from '@angular/material/tooltip'; 
+import {MatTableModule} from '@angular/material/table'; 
 
 registerLocaleData(localeFr, 'fr');
 
@@ -34,7 +34,6 @@ registerLocaleData(localeFr, 'fr');
     AppComponent,
     FiltresComponent,
     ListeVolsComponent,
-    VolComponent,
     ToolbarComponent,
     ListePassagersComponent,
     PassagerComponent,
@@ -59,6 +58,7 @@ registerLocaleData(localeFr, 'fr');
     MatNativeDateModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    MatTableModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },

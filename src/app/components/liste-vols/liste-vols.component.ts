@@ -10,6 +10,8 @@ export class ListeVolsComponent {
   @Input() vols!: Vol[];
   @Input() type!: string;
 
+  displayedColumns: string[] = ["type", "icao", "matricule", "compagnie", "departArrivee", "logoCompagnie"]
+
   @Output() volSelectionEvent = new EventEmitter<Vol>();
 
   onVolClick(vol: Vol) {
