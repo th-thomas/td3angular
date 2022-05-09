@@ -1,1 +1,4 @@
 <!-- Affichage de la liste des vols -->
+<div *ngFor="let vol of vols">
+    <app-vol [vol]="vol" (click)="onVolClick(vol)"></app-vol>
+</div>

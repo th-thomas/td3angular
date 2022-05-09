@@ -52,7 +52,7 @@ registerLocaleData(localeFr, 'fr');
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },

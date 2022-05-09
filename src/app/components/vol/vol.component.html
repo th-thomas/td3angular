@@ -1,1 +1,25 @@
 <!-- Affichage d'un vol -->
+
+<div class="columns">
+    <div class="column is-narrow">
+        <mat-icon>flight_takeoff</mat-icon>
+    </div>
+    <div class="column is-narrow">
+        <p>{{ vol.icao }}</p>
+    </div>
+    <div class="column">
+        <p>{{ vol.matricule }}</p>
+    </div>
+    <div class="column">
+        <p>{{ vol.compagnie }}</p>
+    </div>
+    <div class="column">
+        <p>{{ vol.aeroportDepart }}</p>
+        <mat-icon>arrow_right_alt</mat-icon>
+        <p *ngIf="vol.aeroportArrivee != null">{{ vol.aeroportArrivee }}</p>
+        <p *ngIf="vol.aeroportArrivee == null">Inconnu</p>
+    </div>
+    <div class="column">
+        <img src="assets/{{vol.compagnie}}.png">
+    </div>
+</div>

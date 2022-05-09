@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { IFiltres } from 'src/app/models/filtres.model';
 import { Vol } from 'src/app/models/vol.model';
 import { VolService } from '../../services/vol.service';
+import { Subscription } from 'rxjs';
+import { PassagerService } from 'src/app/services/passager.service';
 
 @Component({
   selector: 'app-view-airfrance',
   templateUrl: './view-airfrance.component.html',
   styleUrls: ['./view-airfrance.component.scss']
 })
-export class ViewAirFranceComponent {
+export class ViewAirFranceComponent implements OnDestroy {
 
   vols: Vol[] = [];
+  volSelectionne!: Vol;
 
-  constructor(private _volService: VolService) { }
+  private _subscriptions = new Subscription();
+
+  constructor(private _volService: VolService, private _passagerService: PassagerService) { }
 
   /**
    * Réaction à la mise à jour des filtres
@@ -21,7 +26,24 @@ export class ViewAirFranceComponent {
    * @param filtres récupérés depuis le composant enfant
    */
   onFiltresEvent(filtres: IFiltres): void {
-    // TODO
+    const code: string = filtres.aeroport.icao;
+    const debut: number = filtres.debut.getTime() / 1000;
+    const fin: number = filtres.fin.getTime() / 1000;
+    const volsSubscription = this._volService.getVolsDepart(code, debut, fin).subscribe((value) => {
+      this.vols = value;
+    });
+    this._subscriptions.add(volsSubscription);
   }
 
+  selectVol(volSelectionne: Vol) {
+    this.volSelectionne = volSelectionne;
+    const passagersSubscription = this._passagerService.getPassagers(volSelectionne.icao).subscribe((value) => {
+      volSelectionne.passagers = value;
+    });
+    this._subscriptions.add(passagersSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
 }
