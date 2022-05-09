@@ -1,5 +1,10 @@
 <!-- Affichage de la liste des passagers -->
+<mat-slide-toggle
+    [(ngModel)]="affichagePhotos"
+    *ngIf="vol.passagers != null && vol.passagers.length > 0">
+    Affichage des photos
+</mat-slide-toggle>
 <div *ngFor="let passager of vol.passagers">
-    <app-passager [passager]="passager"></app-passager>
+    <app-passager [passager]="passager" [photoVisible]="affichagePhotos"></app-passager>
 </div>
 

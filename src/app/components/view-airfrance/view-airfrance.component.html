@@ -1,12 +1,15 @@
 <div class="container">
-  <div class="title"><h1>DECOLLAGES</h1></div>
+  <div class="title">
+    <h1 *ngIf="type == 'decollages'; else atterrissages">DECOLLAGES</h1>
+    <ng-template #atterrissages><h1>ATTERRISSAGES</h1></ng-template>
+  </div>
   <div class="sections">
     <div class="left">
       <div class="top">
         <app-filtres (filtresEvent)="onFiltresEvent($event)"></app-filtres>
       </div>
       <div class="bottom">
-        <app-liste-vols [vols]="vols" (volSelectionEvent)="selectVol($event)"></app-liste-vols>
+        <app-liste-vols [vols]="vols" [type]="type" (volSelectionEvent)="selectVol($event)"></app-liste-vols>
       </div>
     </div>
     <div class="right">

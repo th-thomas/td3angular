@@ -4,6 +4,7 @@ import { Vol } from 'src/app/models/vol.model';
 import { VolService } from '../../services/vol.service';
 import { Subscription } from 'rxjs';
 import { PassagerService } from 'src/app/services/passager.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-airfrance',
@@ -14,10 +15,14 @@ export class ViewAirFranceComponent implements OnDestroy {
 
   vols: Vol[] = [];
   volSelectionne!: Vol;
+  type!: string;
 
   private _subscriptions = new Subscription();
 
-  constructor(private _volService: VolService, private _passagerService: PassagerService) { }
+  constructor(
+    private _volService: VolService,
+    private _passagerService: PassagerService,
+    private _activatedRoute: ActivatedRoute) { }
 
   /**
    * Réaction à la mise à jour des filtres
@@ -29,10 +34,18 @@ export class ViewAirFranceComponent implements OnDestroy {
     const code: string = filtres.aeroport.icao;
     const debut: number = filtres.debut.getTime() / 1000;
     const fin: number = filtres.fin.getTime() / 1000;
-    const volsSubscription = this._volService.getVolsDepart(code, debut, fin).subscribe((value) => {
-      this.vols = value;
-    });
-    this._subscriptions.add(volsSubscription);
+    if (this.type == "atterrissages") {
+      const volsSubscription = this._volService.getVolsArrivee(code, debut, fin).subscribe((value) => {
+        this.vols = value;
+      });
+      this._subscriptions.add(volsSubscription);
+    }
+    else {
+      const volsSubscription = this._volService.getVolsDepart(code, debut, fin).subscribe((value) => {
+        this.vols = value;
+      });
+      this._subscriptions.add(volsSubscription);
+    }
   }
 
   selectVol(volSelectionne: Vol) {
@@ -41,6 +54,14 @@ export class ViewAirFranceComponent implements OnDestroy {
       volSelectionne.passagers = value;
     });
     this._subscriptions.add(passagersSubscription);
+  }
+
+  ngOnInit(): void {
+    const routeSubscription = this._activatedRoute.data.subscribe((data$) => {
+      this.type = data$['type'] ? data$['type'] : 'decollages';
+      console.log(data$['type']);
+    });
+    this._subscriptions.add(routeSubscription);
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,7 @@ import { Vol } from 'src/app/models/vol.model';
 })
 export class ListeVolsComponent {
   @Input() vols!: Vol[];
+  @Input() type!: string;
 
   @Output() volSelectionEvent = new EventEmitter<Vol>();
 

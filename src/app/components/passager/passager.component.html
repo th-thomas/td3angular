@@ -1,16 +1,22 @@
 <!-- Affichage d'un passager -->
 <div class="columns">
-    <div class="column">
+    <div class="column" *ngIf="photoVisible">
         <img [src]="passager.image">
     </div>
     <div class="column">
-        {{ passager.nom }}
+        <div [matTooltip]="passager.email">
+            {{ passager.nom }}
+        </div>
     </div>
     <div class="column">
-        {{ passager.classeVol }}
+        <span [appClasseVol]="passager.classeVol">
+            {{ passager.classeVol }}
+        </span>
     </div>
-    <mat-icon>
-        work
-    </mat-icon>
-    <span>x{{ passager.nbBagagesSoute }}</span>
+    <div class="column" [appClasseBagageWarning]="passager.classeVol" [nbBagages]="passager.nbBagagesSoute">
+        <mat-icon>
+            work
+        </mat-icon>
+        <span>x{{ passager.nbBagagesSoute }}</span>
+    </div>
 </div>

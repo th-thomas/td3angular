@@ -8,4 +8,5 @@ import { Passager } from 'src/app/models/passager.model';
 })
 export class PassagerComponent {
   @Input() passager!: Passager;
+  @Input() photoVisible!: boolean;
 }
