@@ -19,13 +19,13 @@ import { AppComponent } from './app.component';
 import { FiltresComponent } from './components/filtres/filtres.component';
 import { ListePassagersComponent } from './components/liste-passagers/liste-passagers.component';
 import { ListeVolsComponent } from './components/liste-vols/liste-vols.component';
-import { PassagerComponent } from './components/passager/passager.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ViewAirFranceComponent } from './components/view-airfrance/view-airfrance.component';
 import { ClasseVolDirective } from './classe-vol.directive';
 import { ClasseBagageWarningDirective } from './classe-bagage-warning.directive';
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import {MatTableModule} from '@angular/material/table'; 
+import {MatBadgeModule} from '@angular/material/badge'; 
 
 registerLocaleData(localeFr, 'fr');
 
@@ -36,7 +36,6 @@ registerLocaleData(localeFr, 'fr');
     ListeVolsComponent,
     ToolbarComponent,
     ListePassagersComponent,
-    PassagerComponent,
     ViewAirFranceComponent,
     ClasseVolDirective,
     ClasseBagageWarningDirective
@@ -59,6 +58,7 @@ registerLocaleData(localeFr, 'fr');
     MatSlideToggleModule,
     MatTooltipModule,
     MatTableModule,
+    MatBadgeModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },
